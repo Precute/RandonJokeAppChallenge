@@ -8,7 +8,7 @@ Clone application directly into Android Studio using
 ```bash
 https://github.com/Precute/RandonJokeAppChallenge.git
 ```
-Then build the project
+Then build the project from your IDE
 
 
 ## Contributing
