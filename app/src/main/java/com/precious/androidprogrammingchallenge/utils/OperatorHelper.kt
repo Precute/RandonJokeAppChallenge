@@ -43,7 +43,23 @@ fun closeDialog(view: View, activity: Class<*>) {
 }
 
 fun classIntent(): Class<*> {
-    return if (RandomJokeDialog.fullname.isEmpty()) {
+    return if (fullname.isEmpty()) {
         HomeScreenMainActivity::class.java
     } else SearchJokeActivity::class.java
+}
+
+
+fun validateInput(fullname : String): Boolean {
+    val regex = """^(.*\s+.+)+${'$'}""".toRegex()
+    if (!regex.matches(fullname)) {
+        return false
+    }
+    return true
+}
+
+fun validateInputForNull(fullname : String): Boolean {
+    if (fullname.isBlank()) {
+        return false
+    }
+    return true
 }

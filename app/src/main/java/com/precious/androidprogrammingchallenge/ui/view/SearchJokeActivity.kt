@@ -8,11 +8,14 @@ import android.widget.EditText
 import androidx.fragment.app.FragmentActivity
 import com.precious.androidprogrammingchallenge.R
 import com.precious.androidprogrammingchallenge.ui.dialog.RandomJokeDialog
+import com.precious.androidprogrammingchallenge.utils.validateInput
+import com.precious.androidprogrammingchallenge.utils.validateInputForNull
 
 class SearchJokeActivity : AppCompatActivity() {
     lateinit var fullName: EditText
     lateinit var searchBtn: Button
     var noExplicitJoke = false
+    lateinit var fullnameToString: String
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         supportActionBar!!.setDisplayHomeAsUpEnabled(true)
@@ -20,8 +23,10 @@ class SearchJokeActivity : AppCompatActivity() {
         noExplicitJoke = (intent.getBooleanExtra("noExplicitContent",noExplicitJoke ))
         fullName = findViewById(R.id.editTextTextPersonName)
         searchBtn = findViewById(R.id.searchBtn)
+        fullnameToString = fullName!!.text.toString()
+
         searchBtn.setOnClickListener(View.OnClickListener { view ->
-            if (validateInput()) {
+            if (checkForInputError()) {
                 val name = fullName.getText().toString().split(" ").toTypedArray()
                 //RandomJokeDialog randomJokeDialog = new RandomJokeDialog(name);
                 val randomJokeDialog: RandomJokeDialog =
@@ -32,19 +37,15 @@ class SearchJokeActivity : AppCompatActivity() {
             }
         })
     }
-
-    fun validateInput(): Boolean {
-        val fullname = fullName!!.text.toString()
-        val regex = """^(.*\s+.+)+${'$'}""".toRegex()
-
-        if (fullName!!.length() == 0) {
+    fun checkForInputError(): Boolean {
+        if(validateInput(fullnameToString)) {
             fullName!!.requestFocus()
-            fullName!!.error = "This field is required"
+            fullName!!.error = "Enter Fullname"
             return false
         }
-        if (!regex.matches(fullname)) {
+        if (validateInputForNull(fullnameToString)) {
             fullName!!.requestFocus()
-            fullName!!.error = "Enter full name"
+            fullName!!.error = "This Field is Required"
             return false
         }
         return true

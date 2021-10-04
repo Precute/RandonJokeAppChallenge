@@ -2,9 +2,8 @@ package com.precious.androidprogrammingchallenge.ui.view
 
 import com.precious.androidprogrammingchallenge.ui.dialog.RandomJokeDialog.Companion.fullname
 import com.precious.androidprogrammingchallenge.ui.dialog.RandomJokeDialog.Companion.noExplicitJoke
-import com.precious.androidprogrammingchallenge.utils.getUrl
-import com.precious.androidprogrammingchallenge.utils.setUrl
-import com.precious.androidprogrammingchallenge.utils.title
+import com.precious.androidprogrammingchallenge.utils.*
+import com.precious.androidprogrammingchallenge.utils.validateInput
 import org.junit.Assert.*
 import org.junit.Test
 import org.junit.runner.RunWith
@@ -51,5 +50,40 @@ class ValidateUserInputTest {
         val result = getUrl(url)
         assertEquals(result, "random?exclude=[explicit]")
     }
+    @Test
+    fun validateUserInputFullname(){
+        val fullname = "precious Chuck"
+        val result = validateInput(fullname)
+        assertEquals(result, true)
+    }
+
+    @Test
+    fun validateUserInputFullnameInvalid(){
+        val fullname = "precious"
+        val result = validateInput(fullname)
+        assertEquals(result, false)
+    }
+
+    @Test
+    fun validateUserInputFullnameInvalidSurname(){
+        val fullname = "precious "
+        val result = validateInput(fullname)
+        assertEquals(result, false)
+    }
+
+    @Test
+    fun validateNoUserInput(){
+        val fullname = ""
+        val result = validateInputForNull(fullname)
+        assertEquals(result, false)
+    }
+
+    @Test
+     fun whenIntentClass(){
+        fullname = emptyArray()
+        val result = classIntent()
+        assertEquals(result, HomeScreenMainActivity::class.java)
+    }
+
 
 }
